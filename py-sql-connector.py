@@ -57,8 +57,10 @@ if ch=='1':
         primaryky=input("Primary Key(Y/N): ")
         if primaryky=='Y' or primaryky=='y':
             mycur.execute("ALTER TABLE "+tname+" add column("+fieldname+" "+recordtype+","+"Primary key("+fieldname+"))")
+            print("Table Creation Successful")
         elif primaryky=='N' or primaryky=='n':
             mycur.execute("ALTER TABLE "+tname +" add column("+fieldname+" "+recordtype+")")
+            print("Table Creation Successful")
         else:
             print("Choose either Y or N")
     mycur.execute("ALTER TABLE "+tname+" drop column A0909929")
