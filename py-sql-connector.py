@@ -3,11 +3,18 @@ def konnection():
     global mycur
     mydb = mysql.connector.connect(host='localhost', user='root', passwd = '1234')
     mycur=mydb.cursor()
+def showtablefunc():
+    mycur.execute("select * from "+tname)
+    r=mycur.fetchall()
+    for i in range(len(r)):
+        showtabb=r.pop(0)
+        print(showtabb,end='\n')
+from ast import While
 import mysql.connector,sys,os
 print("\u0332".join("STUDENT DATABASE\n"))
 konnection()
 print("\u0332".join("AVAILABLE DATABASES\n"))
-r=a=t=e=z=temp2=fieldn=[]
+r=a=t=e=z=temp2=fieldn=listfield=[]
 mycur.execute("show databases")
 r=mycur.fetchall()
 z=list(r)
@@ -53,8 +60,8 @@ print("1-CREATE TABLE\n2-USE TABLE\n3-ALTER TABLE")
 ch=input("\nSelect Option: ")
 if ch=='1':
     tname=input("Enter Table Name: ")
-    nooc=int(input("Enter number of fields: "))
-    mycur.execute("CREATE TABLE "+tname+" (A0909929 int(1))")
+    nooc=int(input("Enter number of fields (NOTE: \"sno\"  field will be automatically created): "))
+    mycur.execute("CREATE TABLE "+tname+" (sno int(3))")
     for i in range(nooc):
         print()
         print("\u0332".join(i))
@@ -67,7 +74,6 @@ if ch=='1':
             mycur.execute("ALTER TABLE "+tname +" add column("+fieldname+" "+recordtype+")")
         else:
             print("\nChoose either Y or N")
-    mycur.execute("ALTER TABLE "+tname+" drop column A0909929")
     print("/u0332".join("Table Created"))
 elif ch=='2':
     tname=input("\nEnter Table Name:")
@@ -86,12 +92,11 @@ elif ch=='2':
         print(showtabcont,end='\n')
     print("\u0332".join("TABLE SELECTED"))
 elif ch=='3':
-    print("incomplete code")
+    
 
 print("\u0332".join('\nMENU'))
-print("1-INSERT VALUES\n2-UPDATE VALUES\n3-DELETE ROW\n")
+print("1-INSERT ROW\n2-UPDATE ROW\n3-DELETE ROW\n")
 ch=input("Select Option: ")
-
 if ch=='1':
     mycur.execute("describe students")
     tabledes=mycur.fetchall()
@@ -105,28 +110,35 @@ if ch=='1':
     ch=input("Enter Values: ")
     mycur.execute("Insert into "+tname+" values("+ch+")")
     mydb.commit()
+    print()
     print("\u0332".join("Record inserted"))
+    showtablefunc()
 elif ch=='2':
-    mycur.execute("select * from "+tname)
-    r=list[mycur.fetchall()]
-    for i in range(len(r)):
-        indtabdes=r[i]
+    con=input("Enter sno: ") 
+    mycur.execute("DESCRIBE "+tname+";")
+    r=mycur.fetchall()
+    for i in range(len(r)-1):
+        indtabdes=r.pop(1)
         tabfield=indtabdes[0]
         fieldn.append(tabfield)
-        tupfield=tuple(fieldn)
-    print(tupfield)
-    vals=tuple(input("Enter Values: "))
-    mycur.execute("Update "+tname+" ("+tupfield+") values"+vals)
-    mydb.commit()
+        print(fieldn[i],end="-")
+        val=input("Enter Value: ")
+        print()
+        mycur.execute("UPDATE "+tname+" set "+listfield[i]+"=\""+val+"\" WHERE sno=\""+con+"\"")
+        mydb.commit()
+        print()
+    print("\u0332".join("Record Updated"))
+    showtablefunc()
 elif ch=='3':
     mycur.execute("select * from "+tname)
-    r=list[mycur.fetchall()]
+    r=mycur.fetchall()
     for i in range(len(r)):
-        indtabdes=r[i]
-        tabfield=indtabdes[0]
-        fieldn.append(tabfield)
-        tupfield=tuple(fieldn)
-    print(tupfield)
-    vals=tuple(input("Enter Values: "))
-    mycur.execute("delete from "+tname+" ("+tupfield+") values"+vals)
+        showtabb=r.pop(0)
+        print(showtabb,end='\n')
+    ch=input("Enter sno of the row to be deleted: ")
+    mycur.execute("DELETE FROM "+tname+" WHERE sno=\""+ch+"\"")
     mydb.commit()
+    print()
+    print("\u0332".join("Record Deleted"))
+    showtablefunc()
+
