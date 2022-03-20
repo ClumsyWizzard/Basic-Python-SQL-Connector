@@ -112,10 +112,15 @@ while True:
             colname=input("Enter Desired Column Name: ")
             coltype=input("Enter Data Type: ")
             mycur.execute("ALTER TABLE "+tname+" ADD "+colname+" "+coltype)
+            mydb.close()
+            connection()
+            mycur.execute("USE "+finaldb )
         elif ch=='2':
             colname=input("Enter the Column Name to be Deleted: ")
-
             mycur.execute("ALTER TABLE "+tname+" DROP COLUMN "+colname)
+            mydb.close()
+            connection()
+            mycur.execute("USE "+finaldb )
         print()
         print("\u0332".join(tname+" Table Structure"))
         tabledesc()
