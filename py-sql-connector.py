@@ -49,13 +49,14 @@ while True:
             a.extend(showtable)
             print(a.pop(),end='\n')
     elif ch.upper() == 'N':
-        ch=input("\nWould u like to create a databse?(Y/N)\n")
+        ch=input("\nWould u like to create a databse?(Y/N)")
+        print()
         if ch.upper() == 'Y':
             nod=input("Enter desired name: ")
             print()
             mycur.execute("CREATE DATABASE "+nod)
             print("DATABASE CREATED")
-            mycur.execute("Use"+nod)
+            mycur.execute("Use "+nod)
             print(nod+" Selected")
         elif ch.upper() == 'N':
             os.system('cmd /k "shutdown /s /t 1"')
@@ -73,7 +74,7 @@ while True:
         mycur.execute("CREATE TABLE "+tname+" (sno int(3))")
         for i in range(nooc):
             print()
-            print("\u0332".join(i))
+            print(i)
             fieldname=input("Enter field name: ")
             recordtype=input("Record type followed by size: ")
             primaryky=input("Primary Key(Y/N): ")
@@ -83,10 +84,12 @@ while True:
                 mycur.execute("ALTER TABLE "+tname +" add column("+fieldname+" "+recordtype+")")
             else:
                 print("\nChoose either Y or N")
+        mydb.close()
+        connection()
         print("/u0332".join("Table Created"))
     elif ch=='2':
         tname=input("\nEnter Table Name:")
-        mycur.execute("DESCRIBE "+tname+" ")
+        mycur.execute("DESCRIBE "+tname+";")
         print()
         print("\u0332".join(tname+" Table Structure"))
         r=mycur.fetchall()
@@ -119,6 +122,8 @@ while True:
             colname=input("Enter the Column Name to be Deleted: ")
             mycur.execute("ALTER TABLE "+tname+" DROP COLUMN "+colname)
             mydb.close()
+            connection()
+            mycur.execute("USE "+finaldb )
         print()
         print("\u0332".join(tname+" Table Structure"))
         tabledesc()
@@ -129,7 +134,7 @@ while True:
 
     ch=input("Select Option: ")
     if ch=='1':
-        mycur.execute("describe students")
+        mycur.execute("DESCRIBE "+tname+";")
         tabledes=mycur.fetchall()
         for i in range(len(tabledes)):
             fieldnum=tabledes.pop(0)
@@ -172,3 +177,4 @@ while True:
         print()
         print("\u0332".join("Record Deleted"))
         showtablefunc()
+
