@@ -49,13 +49,14 @@ while True:
             a.extend(showtable)
             print(a.pop(),end='\n')
     elif ch.upper() == 'N':
-        ch=input("\nWould u like to create a databse?(Y/N)\n")
+        ch=input("\nWould u like to create a databse?(Y/N)")
+        print()
         if ch.upper() == 'Y':
             nod=input("Enter desired name: ")
             print()
             mycur.execute("CREATE DATABASE "+nod)
             print("DATABASE CREATED")
-            mycur.execute("Use"+nod)
+            mycur.execute("Use "+nod)
             print(nod+" Selected")
         elif ch.upper() == 'N':
             os.system('cmd /k "shutdown /s /t 1"')
@@ -73,7 +74,7 @@ while True:
         mycur.execute("CREATE TABLE "+tname+" (sno int(3))")
         for i in range(nooc):
             print()
-            print("\u0332".join(i))
+            print(i)
             fieldname=input("Enter field name: ")
             recordtype=input("Record type followed by size: ")
             primaryky=input("Primary Key(Y/N): ")
