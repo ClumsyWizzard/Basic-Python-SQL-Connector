@@ -10,7 +10,7 @@ def showtablefunc():
         showtabb=r.pop(0)
         print(showtabb,end='\n')
 def tabledesc():
-    mycur.execute("describe students")
+    mycur.execute("DESCRIBE "+tname+";")
     tabledes=mycur.fetchall()
     for i in range(len(tabledes)):
         fieldnum=tabledes.pop(0)
@@ -177,4 +177,3 @@ while True:
         print()
         print("\u0332".join("Record Deleted"))
         showtablefunc()
-
